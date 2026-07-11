@@ -112,4 +112,18 @@ window.onload = function () {
 
     calculate();
 
-};}
+function convertCount() {
+
+    let ne = Number(document.getElementById("ne").value) || 0;
+    let nm = Number(document.getElementById("nm").value) || 0;
+
+    // Ne to Lea
+    let leaFromNe = ne * 2.8;
+
+    // Nm to Lea
+    let leaFromNm = nm * 1.693;
+
+    document.getElementById("leaNe").value = leaFromNe.toFixed(2);
+    document.getElementById("leaNm").value = leaFromNm.toFixed(2);
+
+}
