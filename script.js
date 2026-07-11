@@ -91,4 +91,25 @@ function calculate() {
     document.getElementById("linearWeight").innerHTML = linearWeight.toFixed(2);
     document.getElementById("gsm").innerHTML = gsm.toFixed(2);
 
-}
+// Save all input values automatically
+const inputs = document.querySelectorAll("input");
+
+inputs.forEach(input => {
+    input.addEventListener("input", () => {
+        localStorage.setItem(input.id, input.value);
+    });
+});
+
+// Restore values when the app opens
+window.onload = function () {
+
+    inputs.forEach(input => {
+        const saved = localStorage.getItem(input.id);
+        if (saved !== null) {
+            input.value = saved;
+        }
+    });
+
+    calculate();
+
+};}
