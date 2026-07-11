@@ -16,9 +16,8 @@ function calculate() {
         (Number(document.getElementById("weftPattern1").value) || 0) +
         (Number(document.getElementById("weftPattern2").value) || 0);
 
-    // ==========================
+
     // Warp Weight
-    // ==========================
     let totalWarpWeight = 0;
 
     for (let i = 1; i <= 2; i++) {
@@ -30,17 +29,15 @@ function calculate() {
 
             let wt =
                 ((reed * reedSpace * 0.6501 * 2.8) /
-                    (10 * count))
-                * pattern
-                / totalWarpPattern;
+                (10 * count))
+                * pattern / totalWarpPattern;
 
             totalWarpWeight += wt;
         }
     }
 
-    // ==========================
+
     // Weft Weight
-    // ==========================
     let totalWeftWeight = 0;
 
     for (let i = 1; i <= 2; i++) {
@@ -52,16 +49,16 @@ function calculate() {
 
             let wt =
                 ((pick * (reedSpace + 1.2) * 0.5901 * 2.8) /
-                    (10 * count))
-                * pattern
-                / totalWeftPattern;
+                (10 * count))
+                * pattern / totalWeftPattern;
 
             totalWeftWeight += wt;
         }
     }
 
-    // Grand Total
+
     let grandTotal = totalWarpWeight + totalWeftWeight;
+
 
     // Blend %
     let warpBlend = 0;
@@ -72,8 +69,10 @@ function calculate() {
         weftBlend = (totalWeftWeight / grandTotal) * 100;
     }
 
+
     // Linear Weight
     let linearWeight = grandTotal * 10 * 0.96;
+
 
     // GSM
     let gsm = 0;
@@ -82,7 +81,8 @@ function calculate() {
         gsm = linearWeight / (fw * 0.0254);
     }
 
-    // Display Results
+
+    // Display
     document.getElementById("warpWeight").innerHTML = totalWarpWeight.toFixed(2);
     document.getElementById("weftWeight").innerHTML = totalWeftWeight.toFixed(2);
     document.getElementById("warpBlend").innerHTML = warpBlend.toFixed(2) + "%";
@@ -90,40 +90,56 @@ function calculate() {
     document.getElementById("grandTotal").innerHTML = grandTotal.toFixed(2);
     document.getElementById("linearWeight").innerHTML = linearWeight.toFixed(2);
     document.getElementById("gsm").innerHTML = gsm.toFixed(2);
+}
 
-// Save all input values automatically
-const inputs = document.querySelectorAll("input");
 
-inputs.forEach(input => {
-    input.addEventListener("input", () => {
-        localStorage.setItem(input.id, input.value);
-    });
-});
-
-// Restore values when the app opens
-window.onload = function () {
-
-    inputs.forEach(input => {
-        const saved = localStorage.getItem(input.id);
-        if (saved !== null) {
-            input.value = saved;
-        }
-    });
-
-    calculate();
-
+// Yarn Count Converter
 function convertCount() {
 
     let ne = Number(document.getElementById("ne").value) || 0;
     let nm = Number(document.getElementById("nm").value) || 0;
 
+
     // Ne to Lea
     let leaFromNe = ne * 2.8;
 
+
     // Nm to Lea
     let leaFromNm = nm * 1.693;
+
 
     document.getElementById("leaNe").value = leaFromNe.toFixed(2);
     document.getElementById("leaNm").value = leaFromNm.toFixed(2);
 
 }
+
+
+
+// Save and Restore Data
+
+window.onload = function() {
+
+    const inputs = document.querySelectorAll("input");
+
+
+    inputs.forEach(input => {
+
+        const saved = localStorage.getItem(input.id);
+
+        if (saved !== null) {
+            input.value = saved;
+        }
+
+
+        input.addEventListener("input", () => {
+
+            localStorage.setItem(input.id, input.value);
+
+        });
+
+    });
+
+
+    calculate();
+
+};
